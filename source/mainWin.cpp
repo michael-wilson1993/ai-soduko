@@ -102,3 +102,15 @@ void mainWin::clearBoard()
 			board[x][y]->setText("");
 		}
 }
+
+
+/*
+
+	sodukoBoard *ab;
+	ab = new sodukoBoard;
+	ab->generateBoard(58);
+	ab->printSolution();
+	ab->draw();
+	sodukoSolver soduko(ab);
+	soduko.startSolve();
+*/

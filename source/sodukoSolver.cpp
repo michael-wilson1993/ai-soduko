@@ -20,7 +20,7 @@ void sodukoSolver::startSolve()
 	for (int var = 1; var <= 9; var++)
 		if (solve(x,y, var))
 		{
-			std::cout << "worked!!!";
+			std::cerr << "worked!!!";
 			break;
 		}
 }
