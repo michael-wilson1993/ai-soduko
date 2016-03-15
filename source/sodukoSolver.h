@@ -1,14 +1,22 @@
+/*
+	- Michael Wilson
+	- sodukoSolver.h
+	- AI 
+	- prof: Yllias Chali
+*/
+
 #pragma once
 #include "sodukoBoard.h"
 
 class sodukoSolver
 {
 public:
-	sodukoSolver(sodukoBoard *t);
+	sodukoSolver();
 	~sodukoSolver();
-	sodukoBoard solve(sodukoBoard b, int x, int y, int val);
+	//sodukoBoard solve(sodukoBoard b, int x, int y, int val);
 	bool solve(int x, int y, int val);
-	void startSolve();
+	bool startSolve();
+	sodukoBoard* solveReturn(sodukoBoard *t);
 
 private:
 	sodukoBoard *board;

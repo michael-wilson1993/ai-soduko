@@ -39,8 +39,6 @@ void Canvas::paintEvent(QPaintEvent *event)
    const QColor color(28,183,235);
    paint.setPen(QPen(color, 2, Qt::SolidLine));
    
-
-std::cerr << "hi";
    //****Draws the shapes****
    for(int x = 0; x < objects.size(); x++)
    {
@@ -69,10 +67,7 @@ std::cerr << "hi";
 
 void Canvas::updateTime(int h,int m, int s)
 {
-   bool a=false,b=false,c=false;
-   secondsW->h = s*-5;
-   minutesW->h = m*-5;
-   hourW->h = h*-25;
+
 
    std::cerr << "hour \n" << hour << " " << h << "\n";
    hour = h;

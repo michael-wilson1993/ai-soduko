@@ -1,9 +1,8 @@
 /*
   - Michael Wilson
   - canvas.h
-  - Human Computer Interaction
-  - prof: Wendy Osborn
-  - march 11/16
+  - AI 
+  - prof: Yllias Chali
 */
 
 #pragma once
@@ -34,8 +33,9 @@ class Canvas : public QWidget
  Q_OBJECT
 
 public:
-
+  // constructor
   Canvas(QWidget *parent = 0);
+  //destructor
   ~Canvas();
 
  public slots:
@@ -45,9 +45,11 @@ public:
    */
    void updatePaint();
    
-
+   // animTick is a slot that will be connected to a clock to make animation possible
   void animTick(const int &info);
+  // updatesTime updates the time stored in this class
   void updateTime(int h,int m, int s); // updates the time
+  // insertObject inserts an oobject into objects vector( this entire vector gets displayed)
   void insertObject(QTObject obj) {objects.push_back(obj);update();};
 
 
@@ -58,9 +60,11 @@ public:
     */
      void paintEvent(QPaintEvent *);
   private:
+    // animation clock
     QTClock *animClock;
+    // vector storing QTOcjects that will get drawn to screen
     std::vector< QTObject > objects;
-    WRect *hourW, *minutesW, *secondsW;
+    // time that gets stored... not needed for soduko ai
     int hour,second, minute;
 
 

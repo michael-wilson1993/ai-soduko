@@ -1,3 +1,10 @@
+/*
+	- Michael Wilson
+	- sodukoBoard.h
+	- AI 
+	- prof: Yllias Chali
+*/
+
 #pragma once
 
 #include <fstream>
@@ -15,6 +22,8 @@ public:
 	bool hardSet(int x, int y, int value);
 	void draw();
 	void generateBoard(int amount);
+	int getVal(int x, int y) {return board[x][y];};
+	void clear();
 
 private:
 	void getBlock(int &x, int &y);

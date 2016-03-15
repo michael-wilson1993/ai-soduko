@@ -3,7 +3,7 @@
 mainWin::mainWin()
 {
 
-
+	SBoard= new sodukoBoard();
 
 	// creates a mainwindow widget to set the layout to
 	QWidget *MainWindow = new QWidget;
@@ -28,8 +28,18 @@ mainWin::mainWin()
 	close_b= new QPushButton("close");
 	connect(close_b, SIGNAL(clicked()), this, SLOT(close()));
 	connect(clear_b, SIGNAL(clicked()), this, SLOT(clearBoard()));
+	connect(solve_b, SIGNAL(clicked()), this, SLOT(solve_slot()));
+	connect(gen_b, SIGNAL(clicked()), this, SLOT(generate_slot()));
 
-	
+	colorClock = new QTClock(false,0,this);
+   connect(colorClock, SIGNAL(tick(const int &)), this, SLOT(animTick(const int &)));
+
+   	// connecting buttons to the timer
+   	connect(close_b, SIGNAL(clicked()), colorClock, SLOT(SingleClockLoop()));
+	connect(clear_b, SIGNAL(clicked()), colorClock, SLOT(SingleClockLoop()));
+	connect(solve_b, SIGNAL(clicked()), colorClock, SLOT(SingleClockLoop()));
+	connect(gen_b, SIGNAL(clicked()), colorClock, SLOT(SingleClockLoop()));
+
 	paint = new Canvas(this);
 	std::vector< QTObject > lines;
 	lines.push_back(QTObject(0,0,0,false,false,"",840, 555));
@@ -71,6 +81,7 @@ mainWin::mainWin()
 	
 	MainWindow->setLayout(gridLayout);
 
+	clearBoard();
 
 
 }
@@ -88,8 +99,15 @@ std::cerr << "\n\n x = " << xx << "\n y = " << yy << "\n\n";
 void mainWin::returnNum(const int &xx, const int &yy, const int &val)
 {
 	std::cerr << "\n\n" << val << "\n\n";
-	board[xx][yy]->setTextFromInt(val);
-	board[xx][yy]->setVal(val);
+	if(SBoard->set(xx,yy,val))
+	{
+		board[xx][yy]->setTextFromInt(val);
+		board[xx][yy]->setVal(val);
+		board[xx][yy]->setStyleSheet("background-color: #45D963");
+	}
+	else
+		board[xx][yy]->setStyleSheet("background-color: #D9253A");
+	colorClock->SingleClockLoop();
 	delete getNum_w;
 }
 
@@ -100,10 +118,71 @@ void mainWin::clearBoard()
 		{
 			board[x][y]->setVal(0);
 			board[x][y]->setText("");
+			board[x][y]->setStyleSheet("background-color: #ABA4A5");
+		}
+		SBoard->clear();
+}
+
+void mainWin::animTick(const int &info)
+{
+		for(int x = 0 ;x < 9; x++)
+		for(int y = 0; y < 9; y ++)
+		{
+			if(board[x][y]->val == 0)
+				board[x][y]->setStyleSheet("background-color: #ABA4A5");
+			else
+				board[x][y]->setStyleSheet("background-color: #00FF15");
 		}
 }
 
 
+void mainWin::solve_slot()
+{
+	if(!SBoard->isSolved())
+	{
+		sodukoBoard *temp = solver.solveReturn(SBoard);
+
+		if(temp->isSolved())
+		{
+			SBoard = temp;
+			for(int x = 0 ;x < 9; x++)
+			for(int y = 0; y < 9; y ++)
+			{
+				board[x][y]->setTextFromInt(SBoard->getVal(x,y));
+				board[x][y]->val = SBoard->getVal(x,y);
+				board[x][y]->setStyleSheet("background-color: #45D963");
+			}
+		}
+		else
+		{
+			for(int x = 0 ;x < 9; x++)
+			for(int y = 0; y < 9; y ++)
+			{
+
+				board[x][y]->setStyleSheet("background-color: #D9253A");
+
+			}
+		}
+	}
+}
+
+void mainWin::generate_slot()
+{
+		clearBoard();
+	SBoard->generateBoard(20);
+	int value;
+				for(int x = 0 ;x < 9; x++)
+			for(int y = 0; y < 9; y ++)
+			{
+				value = SBoard->getVal(x,y);
+				if(value == 0)
+					board[x][y]->setText("");
+				else
+					board[x][y]->setTextFromInt(value);
+				board[x][y]->val = SBoard->getVal(x,y);
+				board[x][y]->setStyleSheet("background-color: #45D963");
+			}
+}
 /*
 
 	sodukoBoard *ab;

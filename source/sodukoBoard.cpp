@@ -99,7 +99,7 @@ bool sodukoBoard::nextSpot(int &x, int &y)
 		}
 	}
 	solved = true;
-	printSolution();
+	//printSolution();
 	return false;
 }
 
@@ -188,4 +188,16 @@ void sodukoBoard::generateBoard(int amount)
 		}
 
 	}
+}
+
+void sodukoBoard::clear()
+{
+	for (int x = 0; x < 9; x++)
+	{
+		for (int y = 0; y < 9; y++)
+		{
+			board[x][y] = 0;
+		}
+	}
+	solved = false;
 }

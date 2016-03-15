@@ -2,11 +2,23 @@
 
 QTClock::QTClock(bool timeTracker, int miliseconds, QWidget *parent): QWidget(parent)
 {
+
+
 	timer = new QTimer();
-	connect(timer, SIGNAL(timeout()), this, SLOT(ClockLoop()));
-	timer->start(miliseconds);
+	
+	if(miliseconds > 0)
+	{
+		connect(timer, SIGNAL(timeout()), this, SLOT(ClockLoop()));
+		iterationTime = miliseconds;
+		timer->start(miliseconds);
+	}
+	else
+	{
+		connect(timer, SIGNAL(timeout()), this, SLOT(singleSendInfo()));
+		iterationTime = 1000;
+	}
 	count = 1;
-	iterationTime = miliseconds;
+	
 	keepTrack = timeTracker;
 
 }
@@ -22,6 +34,15 @@ void QTClock::ClockLoop()
 	timer->start(iterationTime);
 	if (keepTrack)
 		count++;
+	emit tick(count);
+}
+void QTClock::SingleClockLoop()
+{
+	timer->start(iterationTime);
+}
+
+void QTClock::singleSendInfo()
+{
 	emit tick(count);
 }
 
