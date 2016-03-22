@@ -126,7 +126,7 @@ void sodukoBoard::printSolution()
 	ofstream fout;
 	if (solved)
 	{
-		fout.open("solution.txt", fstream::app);
+		fout.open("solution.txt");
 		fout << "############################################" << endl;
 		fout << "########        Solution           #########" << endl;
 		fout << "############################################" << endl;

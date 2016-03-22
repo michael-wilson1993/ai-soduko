@@ -29,22 +29,7 @@ bool sodukoSolver::startSolve()
 	}
 		return false;
 }
-// sodukoBoard sodukoSolver::solve(sodukoBoard b, int x, int y, int val)
-// {
-// 	b.set(x, y, val);
-// 	std::cerr << val << "\n";
-// 	if (b.isSolved())
-// 		return b;
-// 	int nextX, nextY;
-// 	b.nextSpot(nextX, nextY);
-// 	for (int xx = 0; xx < 9; xx++)
-// 	{
-// 		sodukoBoard sol = solve(b, nextX, nextY, val);
-// 		if (sol.isSolved())
-// 			return sol;
-// 	}
-// 	return b;
-// }
+
 
 bool sodukoSolver::solve(int x, int y, int val)
 {
